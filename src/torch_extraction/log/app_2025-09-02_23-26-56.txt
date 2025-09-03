@@ -1,0 +1,83 @@
+<INFO-keyframe_extraction> -  ####################################################################################################
+            Extract Keyframe On Shot 1 ||| start: 598, end: 604
+        
+<DEBUG-init_center> - 🔹 In the process of initialising the center
+<DEBUG-kmeans_improvement> - cluster [0 0 0 0 0 1]
+<DEBUG-kmeans_improvement> - centers [[ 0.00731885 -0.08939233  0.01599574 ... -0.00760633 -0.00283618
+   0.00304835]
+ [ 0.01481189 -0.0121886   0.00428809 ... -0.02959662  0.00609917
+   0.0086421 ]]
+<DEBUG-kmeans_improvement> - k: 2
+<DEBUG-kmeans_improvement> - features [[ 0.02548109 -0.1262088   0.0077754  ... -0.00471371 -0.01504529
+   0.01504447]
+ [ 0.03100133 -0.14283264  0.00841745 ... -0.00497285 -0.00781421
+  -0.0129399 ]
+ [ 0.00731885 -0.08939233  0.01599574 ... -0.00760633 -0.00283618
+   0.00304835]
+ [ 0.00834773 -0.0949192   0.01888559 ... -0.00807173 -0.00095736
+   0.00192931]
+ [ 0.02025113 -0.0266078   0.0059573  ... -0.03558147  0.01761175
+   0.01009823]
+ [ 0.01481189 -0.0121886   0.00428809 ... -0.02959662  0.00609917
+   0.0086421 ]]
+<DEBUG-kmeans_improvement> - best_k: 2
+<DEBUG-kmeans_improvement> - best_clusters: [0 0 0 0 0 1]
+<DEBUG-kmeans_improvement> - best_centers: [[ 0.00731885 -0.08939233  0.01599574 ... -0.00760633 -0.00283618
+   0.00304835]
+ [ 0.01481189 -0.0121886   0.00428809 ... -0.02959662  0.00609917
+   0.0086421 ]] (len=2)
+<DEBUG-kmeans_improvement> - best_center_index: [np.int64(2), np.int64(5)]
+<DEBUG-keyframe_extraction> - indices: [np.int64(2), np.int64(5)]
+<DEBUG-keyframe_extraction> - clustering: []
+<DEBUG-keyframe_extraction> - segment start-end: 598, 604
+<DEBUG-keyframe_extraction> - filtered indices: [np.int64(600), np.int64(603)]
+<INFO-keyframe_extraction> -  ####################################################################################################
+            Extract Keyframe On Shot 3 ||| start: 605, end: 646
+        
+<DEBUG-init_center> - 🔹 In the process of initialising the center
+<DEBUG-kmeans_improvement> - cluster [2 2 2 2 2 2 0 3 3 3 3 3 0 5 5 0 0 0 0 0 0 0 0 4 4 4 4 4 1 5 5 5 5 1 1 1 1
+ 1 1 1 1]
+<DEBUG-kmeans_improvement> - centers [[-0.0026475  -0.0666731  -0.00549847 ... -0.0263394   0.01210354
+   0.02105064]
+ [-0.00682721 -0.05682098  0.01061265 ... -0.01683633  0.01982512
+   0.00459318]
+ [-0.00432776 -0.10380885  0.0092376  ... -0.02294148  0.0034443
+   0.02384205]
+ [-0.00823742 -0.05158486  0.00662617 ... -0.025994   -0.01191447
+   0.00422293]
+ [-0.01341909 -0.06735525 -0.00204636 ... -0.01686939  0.020773
+   0.01259127]
+ [-0.00719542 -0.07657559  0.00918098 ... -0.0191018   0.02179607
+   0.0022148 ]]
+<DEBUG-kmeans_improvement> - k: 6
+<DEBUG-kmeans_improvement> - features [[-0.01333558 -0.08870925  0.01382286 ...  0.0001289  -0.00673821
+   0.00453447]
+ [-0.00272573 -0.10858084  0.00968692 ... -0.01930258  0.00956507
+   0.02461027]
+ [-0.00179816 -0.10996766  0.00965454 ... -0.01856288  0.00968176
+   0.02456033]
+ ...
+ [-0.00199206 -0.06281336  0.00208632 ... -0.0181697   0.0209007
+   0.01885303]
+ [-0.00102108 -0.07965692  0.00709406 ... -0.01951174  0.02618681
+   0.01469064]
+ [-0.00272389 -0.07642681  0.00833253 ... -0.01745132  0.02565009
+   0.01684842]]
+<DEBUG-kmeans_improvement> - avg_silhouette: 0.2168814241886139
+<DEBUG-kmeans_improvement> - best_avg_silhouette: -1
+<DEBUG-kmeans_improvement> - avg_silhouette: 0.22927206754684448
+<DEBUG-kmeans_improvement> - best_avg_silhouette: 0.2168814241886139
+<DEBUG-kmeans_improvement> - avg_silhouette: 0.2466280609369278
+<DEBUG-kmeans_improvement> - best_avg_silhouette: 0.22927206754684448
+<DEBUG-kmeans_improvement> - avg_silhouette: 0.29462796449661255
+<DEBUG-kmeans_improvement> - best_avg_silhouette: 0.2466280609369278
+<DEBUG-kmeans_improvement> - best_k: 2
+<DEBUG-kmeans_improvement> - best_clusters: [1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0]
+<DEBUG-kmeans_improvement> - best_centers: [array([-0.0026475 , -0.0666731 , -0.00549847, ..., -0.0263394 ,
+        0.01210354,  0.02105064], shape=(1024,), dtype=float32), array([-0.00432776, -0.10380885,  0.0092376 , ..., -0.02294148,
+        0.0034443 ,  0.02384205], shape=(1024,), dtype=float32)] (len=2)
+<DEBUG-kmeans_improvement> - best_center_index: [np.int64(15), np.int64(3)]
+<DEBUG-keyframe_extraction> - indices: [np.int64(15), np.int64(3)]
+<DEBUG-keyframe_extraction> - clustering: [np.int64(600), np.int64(603)]
+<DEBUG-keyframe_extraction> - segment start-end: 605, 646

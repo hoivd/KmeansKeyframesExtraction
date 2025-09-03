@@ -1,0 +1,41 @@
+<INFO-keyframe_extraction> - Tiến hành đọc shot boundary từ file: D:/Keyframe-Extraction-for-video-summarization/src/data/shots_boundary/L21_V005.txt
+<INFO-keyframe_extraction> - Đọc shot boundary thành công D:/Keyframe-Extraction-for-video-summarization/src/data/shots_boundary/L21_V005.txt
+<INFO-keyframe_extraction> - Tiến hành đọc features từ file: D:/Keyframe-Extraction-for-video-summarization/src/data/embeddings/L21_V005_features.pkl
+<INFO-keyframe_extraction> - Đọc features thành công D:/Keyframe-Extraction-for-video-summarization/src/data/embeddings/L21_V005_features.pkl 28294
+<INFO-keyframe_extraction> -  ####################################################################################################
+            Extract Keyframe On Shot 1 ||| start: 598, end: 604
+        
+<DEBUG-init_center> - 🔹 In the process of initialising the center
+<DEBUG-kmeans_improvement> - cluster [0 0 0 0 0 1]
+<DEBUG-kmeans_improvement> - centers [[ 0.00731885 -0.08939233  0.01599574 ... -0.00760633 -0.00283618
+   0.00304835]
+ [ 0.01481189 -0.0121886   0.00428809 ... -0.02959662  0.00609917
+   0.0086421 ]]
+<DEBUG-kmeans_improvement> - k: 2
+<DEBUG-kmeans_improvement> - features [[ 0.02548109 -0.1262088   0.0077754  ... -0.00471371 -0.01504529
+   0.01504447]
+ [ 0.03100133 -0.14283264  0.00841745 ... -0.00497285 -0.00781421
+  -0.0129399 ]
+ [ 0.00731885 -0.08939233  0.01599574 ... -0.00760633 -0.00283618
+   0.00304835]
+ [ 0.00834773 -0.0949192   0.01888559 ... -0.00807173 -0.00095736
+   0.00192931]
+ [ 0.02025113 -0.0266078   0.0059573  ... -0.03558147  0.01761175
+   0.01009823]
+ [ 0.01481189 -0.0121886   0.00428809 ... -0.02959662  0.00609917
+   0.0086421 ]]
+<DEBUG-kmeans_improvement> - best_k: 2
+<DEBUG-kmeans_improvement> - best_clusters: [0 0 0 0 0 1]
+<DEBUG-kmeans_improvement> - best_centers: [[ 0.00731885 -0.08939233  0.01599574 ... -0.00760633 -0.00283618
+   0.00304835]
+ [ 0.01481189 -0.0121886   0.00428809 ... -0.02959662  0.00609917
+   0.0086421 ]] (len=2)
+<DEBUG-kmeans_improvement> - best_center_index: [np.int64(2), np.int64(5)]
+<DEBUG-keyframe_extraction> - indices: [np.int64(2), np.int64(5)]
+<DEBUG-keyframe_extraction> - clustering: []
+<DEBUG-keyframe_extraction> - segment start-end: 598, 604
+<DEBUG-keyframe_extraction> - filtered indices: [np.int64(600), np.int64(603)]
+<INFO-keyframe_extraction> -  ####################################################################################################
+            Extract Keyframe On Shot 2 ||| start: 605, end: 646
+        
+<DEBUG-init_center> - 🔹 In the process of initialising the center
