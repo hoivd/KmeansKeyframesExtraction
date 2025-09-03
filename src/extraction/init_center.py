@@ -1,24 +1,30 @@
 import numpy as np
+from tqdm import tqdm
+from logger import _setup_logger
+import config
 
+logger = _setup_logger(__name__, config.LOG_LEVEL)
 
 def kmeans_init(data):
-    print("In the process of initialising the center")
+    logger.debug("🔹 In the process of initialising the center")
     n = len(data)
-    # calculate sqrt(n)
-    sqrt_n = int(np.sqrt(n))
+    sqrt_n = int(np.sqrt(n))           # số tâm cần chọn
     centers = []
     label = []
 
     # pick init_center
     while len(centers) < sqrt_n:
-
         sse_min = float('inf')
-        for i in range(n):
+        join_center = data[0]
+
+        # tqdm để quan sát tiến trình duyệt qua n điểm
+        for i in tqdm(range(n), desc=f"Selecting center {len(centers)+1}/{sqrt_n}"):
             center = centers.copy()
-            if np.any(data[i] != centers):
+            
+            # kiểm tra tránh chọn lại tâm đã có
+            if len(centers) == 0 or not np.any(np.all(data[i] == centers, axis=1)):
                 center.append(data[i])
                 center = np.array(center)
-                # print(center)
                 sse = 0.0
 
                 # Cluster operation
@@ -28,17 +34,10 @@ def kmeans_init(data):
                     nearest_cluster = np.argmin(distances)
                     cluster_labels[k] = nearest_cluster
 
-                # Based on the results of the cluster operation,calculate sse
+                # Based on the results of the cluster operation, calculate sse
                 for j in range(len(center)):
-                    # Get the data points of the jth cluster
-                    cluster_points = []
-                    for l in range(len(cluster_labels)):
-                        if cluster_labels[l] == j:
-                            cluster_points.append(data[l])
-                    singe_sse = 0.0
-                    for point in cluster_points:
-                        squared_errors = np.linalg.norm(point - center[j])
-                        singe_sse += squared_errors
+                    cluster_points = [data[l] for l in range(len(cluster_labels)) if cluster_labels[l] == j]
+                    singe_sse = sum(np.linalg.norm(point - center[j]) for point in cluster_points)
                     sse += singe_sse
 
                 if sse < sse_min:
@@ -47,5 +46,13 @@ def kmeans_init(data):
                     label = cluster_labels.copy()
 
         centers.append(join_center)
+    
+    clusters = np.array(label) 
+    centers = np.array(centers)
 
-    return np.array(label), np.array(centers)
+    logger.info(f"Khởi tạo cụm và tâm cụm ban đầu thành công")
+    logger.debug(f"Các cụm ban đầu {clusters}")
+    logger.debug(f"Các tâm ban đầu {centers}")
+
+    return clusters, centers
+

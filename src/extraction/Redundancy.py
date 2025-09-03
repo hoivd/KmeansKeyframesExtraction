@@ -1,5 +1,9 @@
 import cv2
 import numpy as np
+from logger import _setup_logger
+import config
+
+logger = _setup_logger(__name__, config.LOG_LEVEL)
 
 
 def redundancy(video_path, keyframe_index, threshold):
