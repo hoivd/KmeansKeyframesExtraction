@@ -41,9 +41,9 @@ def scene_keyframe_extraction(scenes_path, features_path, video_path, save_path,
         sub_features = features[start:end]
         best_labels, best_centers, k, index = kmeans_silhouette(sub_features)
         logger.debug(f"indices: {index}")
-        final_index = [x + start for x in index]
+        final_index = [int(x + start) for x in index]
         # final_index.sort()
-        logger.debug(f"clustering: {keyframe_index}")
+        logger.debug(f"clustering: {final_index}")
         logger.debug(f"segment start-end: {start}, {end}")
         final_index = redundancy(video_path, final_index, 0.94)
         logger.debug(f"filtered indices: {final_index}")

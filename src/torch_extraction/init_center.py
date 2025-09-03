@@ -2,55 +2,68 @@ import numpy as np
 from tqdm import tqdm
 from logger import _setup_logger
 import config
+import torch
 
 logger = _setup_logger(__name__, config.LOG_LEVEL)
 
-def kmeans_init(data):
+def kmeans_init(data: torch.Tensor, device="cuda"):
+    """
+    Khởi tạo tâm cụm theo cách greedy minimization SSE
+    data: torch.Tensor [N, D], dtype=float64
+    device: "cuda" hoặc "cpu"
+
+    return:
+        clusters: torch.LongTensor [N] (nhãn cụm)
+        centers:  torch.Float64Tensor [K, D] (tâm cụm)
+    """
+
     logger.debug("🔹 In the process of initialising the center")
-    n = len(data)
-    sqrt_n = int(np.sqrt(n))           # số tâm cần chọn
+
+    data = data.to(device, dtype=torch.float64)   # đảm bảo data ở GPU float64
+    n = data.shape[0]
+    sqrt_n = int(torch.sqrt(torch.tensor(n, dtype=torch.float64, device=device)).item())
+
     centers = []
-    label = []
+    label = None
 
     # pick init_center
     while len(centers) < sqrt_n:
-        sse_min = float('inf')
+        sse_min = float("inf")
         join_center = data[0]
 
         # tqdm để quan sát tiến trình duyệt qua n điểm
         for i in tqdm(range(n), desc=f"Selecting center {len(centers)+1}/{sqrt_n}"):
-            center = centers.copy()
-            
-            # kiểm tra tránh chọn lại tâm đã có
-            if len(centers) == 0 or not np.any(np.all(data[i] == centers, axis=1)):
-                center.append(data[i])
-                center = np.array(center)
-                sse = 0.0
 
-                # Cluster operation
-                cluster_labels = np.zeros(len(data)).astype(int)
-                for k in range(len(data)):
-                    distances = [np.sqrt(np.sum((data[k] - cen) ** 2)) for cen in center]
-                    nearest_cluster = np.argmin(distances)
-                    cluster_labels[k] = nearest_cluster
+            # copy các tâm hiện tại
+            if len(centers) > 0:
+                current_centers = torch.stack(centers, dim=0)  # [m, D]
+                # kiểm tra tránh chọn lại tâm đã có
+                if torch.any(torch.all(data[i] == current_centers, dim=1)):
+                    continue
+                center = torch.cat([current_centers, data[i].unsqueeze(0)], dim=0)
+            else:
+                center = data[i].unsqueeze(0)
 
-                # Based on the results of the cluster operation, calculate sse
-                for j in range(len(center)):
-                    cluster_points = [data[l] for l in range(len(cluster_labels)) if cluster_labels[l] == j]
-                    singe_sse = sum(np.linalg.norm(point - center[j]) for point in cluster_points)
-                    sse += singe_sse
+            # ---- phân cụm tạm thời ----
+            distances = torch.cdist(data, center, p=2)  # [N, m+1]
+            cluster_labels = torch.argmin(distances, dim=1)
 
-                if sse < sse_min:
-                    sse_min = sse
-                    join_center = data[i]
-                    label = cluster_labels.copy()
+            # ---- tính SSE ----
+            min_distances = distances[torch.arange(n, device=device), cluster_labels]
+            sse = min_distances.sum().item()
+
+            if sse < sse_min:
+                sse_min = sse
+                join_center = data[i]
+                label = cluster_labels.clone()
 
         centers.append(join_center)
-    
-    clusters = np.array(label) 
-    centers = np.array(centers)
 
-    logger.info(f"Khởi tạo cụm và tâm cụm ban đầu thành công")
+    # Chuyển về tensor torch luôn
+    clusters = label  # torch.LongTensor [N]
+    centers = torch.stack(centers, dim=0)  # torch.Float64Tensor [sqrt_n, D]
+
+    logger.info("Khởi tạo cụm và tâm cụm ban đầu thành công")
     logger.debug(f"Các cụm ban đầu {clusters}")
     logger.debug(f"Các tâm ban đầu {centers}")
 
