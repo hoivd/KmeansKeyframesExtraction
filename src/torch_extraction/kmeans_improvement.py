@@ -1,11 +1,12 @@
 import numpy as np
-from sklearn.metrics import silhouette_score
 from scipy.spatial.distance import cdist
 from init_center import kmeans_init
 from logger import _setup_logger
 import config
 import torch
 import cupy
+from cuml.metrics.cluster import silhouette_score
+
 print(torch.__version__)
 print(torch.cuda.is_available())     # True nếu có GPU CUDA
 print(torch.cuda.device_count())     # số lượng GPU
@@ -201,12 +202,16 @@ def kmeans_silhouette(features):
         if avg_silhouette > best_avg_silhouette:
             best_avg_silhouette = avg_silhouette
             best_k = k
-            best_clusters = clusters.copy()
-            best_centers = centers.copy()
-            center_indices = []
-            for cluster_center in best_centers:
-                center_index = np.where((features == cluster_center).all(axis=1))[0][0]
-                center_indices.append(center_index)
+            best_clusters = clusters
+            best_centers = centers
+            matches = (best_centers[:, None, :] == features[None, :, :]).all(dim=2)  # [K, N]
+
+            # Lấy index đầu tiên True cho mỗi center
+            center_indices = matches.float().argmax(dim=1)  # [K]
+
+            # đảm bảo kiểu long
+            center_indices = center_indices.to(dtype=torch.long, device=features.device)
+            
         logger.info(f"Cập nhật cụm và tâm cụm tốt nhất thành công")
         logger.debug(f"best_clusters: {best_clusters}")
         logger.debug(f"best_centers: {best_centers} (len={len(best_centers)})")

@@ -1,3 +1,10 @@
 /src/data/
 /src/extraction/log/
 /src/extraction/__pycache__/
+/src/torch_extraction/__pycache__/
+/src/torch_extraction/log/
+/src/output
+/src/output_beits3_L21_V001_torch/
+/src/output_torch/
+/src/venv/
+

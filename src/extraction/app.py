@@ -8,12 +8,12 @@ logger = _setup_logger(__name__, config.LOG_LEVEL)
 
 def main():
     # ====== CHỈNH ĐƯỜNG DẪN ======
-    video_path = "D:/Keyframe-Extraction-for-video-summarization/src/data/videos/L21_V005.mp4"
-    scenes_path = "D:/Keyframe-Extraction-for-video-summarization/src/data/shots_boundary/L21_V005.txt"
-    features_path = "D:/Keyframe-Extraction-for-video-summarization/src/data/embeddings/L21_V005_features.pkl"
+    video_path = "../data/videos/L21_V005.mp4"
+    scenes_path = "../data/shots_boundary/L21_V005.txt"
+    features_path = "../data/embeddings/L21_V005_features.pkl"
 
     # Nơi lưu keyframes
-    save_path = "D:/Keyframe-Extraction-for-video-summarization/src/output"
+    save_path = "../output"
     folder_path = "video_keyframes"
 
     os.makedirs(save_path, exist_ok=True)
@@ -26,7 +26,7 @@ def main():
         folder_path=folder_path
     )
 
-    keyframes_index_file = 'D:/Keyframe-Extraction-for-video-summarization/src/output/L21_V005_keyframes_index.json'
+    keyframes_index_file = '../output/L21_V005_keyframes_index.json'
 
     # Lưu mảng vào file JSON
     with open(keyframes_index_file, 'w') as json_file:

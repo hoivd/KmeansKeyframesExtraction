@@ -5,6 +5,28 @@ import config
 
 logger = _setup_logger(__name__, config.LOG_LEVEL)
 
+def assign_clusters_and_sse(data, centers, device="cpu"):
+    """
+    data:    torch.Tensor [N, D]  (N điểm, D chiều)
+    centers: torch.Tensor [K, D]  (K tâm, D chiều)
+    device:  "cpu" hoặc "cuda"
+
+    return: cluster_labels [N], SSE (scalar)
+    """
+    data = data.to(device)
+    centers = centers.to(device)
+
+    # Tính khoảng cách Euclid tất cả điểm ↔ tất cả tâm (N x K)
+    distances = torch.cdist(data, centers, p=2)  # shape: [N, K]
+
+    # Nhãn cụm = index của tâm gần nhất
+    cluster_labels = distances.argmin(dim=1)  # [N]
+
+    # SSE = tổng khoảng cách nhỏ nhất của tất cả điểm đến tâm
+    sse = distances.min(dim=1).values.sum()
+
+    return cluster_labels, sse
+
 def kmeans_init(data):
     logger.debug("🔹 In the process of initialising the center")
     n = len(data)

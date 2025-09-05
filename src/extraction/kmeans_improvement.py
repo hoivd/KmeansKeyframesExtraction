@@ -52,12 +52,15 @@ def kmeans_silhouette(features):
                 if distances[i, j] < min_distance:
                     min_distance = distances[i, j]
                     merge_cluster_indices = (i, j)
+        
+        logger.debug(f'merge_cluster_indices: {merge_cluster_indices}')
 
         # Merge the two the nearest clusters and change the high cluster number to the low cluster number
         merged_cluster = np.where(clusters == merge_cluster_indices[1], merge_cluster_indices[0], clusters)
 
         # Update clustering results
         clusters = np.where(merged_cluster > merge_cluster_indices[1], merged_cluster - 1, merged_cluster)
+        logger.debug(f"clusters sau khi merge: {clusters}")
 
         # Update the cluster center, selecting the actual data point as the new cluster center
         new_centers = []
@@ -66,11 +69,15 @@ def kmeans_silhouette(features):
             cluster_samples = features[clusters == cluster_id]
             # Calculate the current cluster mean
             cluster_mean = np.mean(cluster_samples, axis=0)
+            logger.debug(f"cluster_mean: {cluster_mean}")
             # Calculate the Euclidean distance between the sample and the centre point to find the actual center
             distances = np.linalg.norm(cluster_samples - cluster_mean, axis=1)
             closest_sample_index = np.argmin(distances)
+            logger.debug(f"closest_sample_index: {closest_sample_index}")
             # Choose the nearest sample as the new cluster centroid
             new_centers.append(cluster_samples[closest_sample_index])
+
+        logger.debug(f"new_centers: {new_centers}")
 
         centers = new_centers
         # update number of cluster

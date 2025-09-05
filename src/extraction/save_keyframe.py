@@ -27,7 +27,7 @@ def save_frames(keyframe_indexes, video_path, save_path, folder_name):
 
         # 判断当前帧是否为关键帧，如果是，则保存帧图像
         if current_index in keyframe_indexes:
-            file_name = '{}.jpg'.format(current_index)
+            file_name = f"{current_index:04d}.jpg"
             file_path = os.path.join(folder_path, file_name)
             cv2.imwrite(file_path, frame)
 
