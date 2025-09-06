@@ -42,7 +42,7 @@ def gpu_cdist(arr, p=2):
         else:
             t = arr.to(torch.float64)
 
-    print("Tensor shape:", t.shape, "Device:", t.device)
+    # print("Tensor shape:", t.shape, "Device:", t.device)
 
     # Tính khoảng cách bằng torch.cdist
     D = torch.cdist(t, t, p=p)
@@ -148,7 +148,7 @@ def kmeans_silhouette(features):
     # đảm bảo kiểu long
     center_indices = center_indices.to(dtype=torch.long, device=features.device)
     
-    logger.info(f"Cập nhật cụm và tâm cụm tốt nhất thành công")
+    logger.debug(f"Cập nhật cụm và tâm cụm tốt nhất thành công")
     logger.debug(f"best_clusters: {best_clusters}")
     logger.debug(f"best_centers: {best_centers} (len={len(best_centers)})")
     logger.debug(f"best_center_index: {center_indices}")
@@ -156,7 +156,7 @@ def kmeans_silhouette(features):
 
 
     while k > 2:
-        logger.info(f"{'-' * 50}")
+        logger.debug(f"{'-' * 50}")
         # Calculate the Euclidean distance between cluster centers
         cluster_centers = centers
 
@@ -212,11 +212,11 @@ def kmeans_silhouette(features):
             # đảm bảo kiểu long
             center_indices = center_indices.to(dtype=torch.long, device=features.device)
             
-        logger.info(f"Cập nhật cụm và tâm cụm tốt nhất thành công")
+        logger.debug(f"Cập nhật cụm và tâm cụm tốt nhất thành công")
         logger.debug(f"best_clusters: {best_clusters}")
         logger.debug(f"best_centers: {best_centers} (len={len(best_centers)})")
         logger.debug(f"best_center_index: {center_indices}")
-        logger.info(f"{'-' * 50}")
+        logger.debug(f"{'-' * 50}")
 
     # return result
     logger.info(f"Phân cụm và tâm cụm tốt nhất thành công")
