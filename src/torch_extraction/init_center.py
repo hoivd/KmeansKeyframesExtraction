@@ -1,5 +1,4 @@
 import numpy as np
-from tqdm import tqdm
 from logger import _setup_logger
 import config
 import torch
@@ -32,7 +31,7 @@ def kmeans_init(data: torch.Tensor, device="cuda"):
         join_center = data[0]
 
         # tqdm để quan sát tiến trình duyệt qua n điểm
-        for i in tqdm(range(n), desc=f"Selecting center {len(centers)+1}/{sqrt_n}"):
+        for i in range(n):
 
             # copy các tâm hiện tại
             if len(centers) > 0:
@@ -63,7 +62,7 @@ def kmeans_init(data: torch.Tensor, device="cuda"):
     clusters = label  # torch.LongTensor [N]
     centers = torch.stack(centers, dim=0)  # torch.Float64Tensor [sqrt_n, D]
 
-    logger.info("Khởi tạo cụm và tâm cụm ban đầu thành công")
+    logger.debug("Khởi tạo cụm và tâm cụm ban đầu thành công")
     logger.debug(f"Các cụm ban đầu {clusters}")
     logger.debug(f"Các tâm ban đầu {centers}")
 

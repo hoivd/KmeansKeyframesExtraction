@@ -118,7 +118,7 @@ def update_cluster_centers_fully_vectorized(features, clusters, k):
 def kmeans_silhouette(features):
     # calculate sqrt(n)
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    logger.info(f"Using device: {device}")
+    logger.debug(f"Using device: {device}")
     features = torch.as_tensor(features, dtype=torch.float64, device=device)
 
     sqrt_n = int(torch.sqrt(torch.tensor(len(features), 
@@ -131,7 +131,7 @@ def kmeans_silhouette(features):
     best_clusters = None
     best_avg_silhouette = -1
 
-    logger.info("Khởi tạo biến ban đầu thành công")
+    logger.debug("Khởi tạo biến ban đầu thành công")
     logger.debug(f"k: {k}")
 
     # Results of the selection of the initial center (cần phiên bản torch)
@@ -219,7 +219,7 @@ def kmeans_silhouette(features):
         logger.debug(f"{'-' * 50}")
 
     # return result
-    logger.info(f"Phân cụm và tâm cụm tốt nhất thành công")
+    logger.debug(f"Phân cụm và tâm cụm tốt nhất thành công")
     logger.debug(f"best_k: {best_k}")
     logger.debug(f"best_clusters: {best_clusters}")
     logger.debug(f"best_centers: {best_centers} (len={len(best_centers)})")
