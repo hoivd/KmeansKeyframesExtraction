@@ -52,5 +52,4 @@ def redundancy(video_path, keyframe_index, threshold, device="cuda"):
     final_index = mid_index[keep_mask.cpu().numpy()]
     final_index = sorted(final_index.tolist())
 
-    print(final_index)
     return final_index
