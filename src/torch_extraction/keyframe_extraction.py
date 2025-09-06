@@ -62,5 +62,5 @@ def scene_keyframe_extraction(scenes_path, features_path, video_path, save_path,
     logger.debug(f"final_index: {keyframe_index}")
 
     # save keyframe
-    save_frames(keyframe_index, video_path, save_path, folder_path)
+    # save_frames(keyframe_index, video_path, save_path, folder_path)
     return keyframe_index

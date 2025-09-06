@@ -1,24 +1,32 @@
-import cv2
+import av
 import numpy as np
 import torch
 
 def redundancy(video_path, keyframe_index, threshold, device="cuda"):
     # --- 1. Hàm con tính histogram ---
     def color_histogram(img):
+        import cv2
         hist = cv2.calcHist([img], [0, 1, 2], None,
                             [8, 8, 8], [0, 255, 0, 255, 0, 255])
         return hist.flatten()
 
-    # --- 2. Tính histogram cho keyframes ---
+    # --- 2. Đọc keyframes bằng PyAV ---
     histograms = []
-    video = cv2.VideoCapture(video_path)
-    for frame_index in keyframe_index:
-        video.set(cv2.CAP_PROP_POS_FRAMES, frame_index)
-        ret, frame = video.read()
-        if ret:
-            histograms.append(color_histogram(frame))
-    video.release()
+    container = av.open(video_path)
+    stream = container.streams.video[0]
 
+    keyframe_index_set = set(keyframe_index)
+    frames = {}
+    for frame in container.decode(stream):
+        if frame.index in keyframe_index_set:
+            img = frame.to_ndarray(format="bgr24")
+            frames[frame.index] = color_histogram(img)
+        if len(frames) == len(keyframe_index):
+            break
+    container.close()
+
+    # sắp xếp đúng thứ tự input
+    histograms = [frames[idx] for idx in keyframe_index if idx in frames]
     histograms = np.array(histograms)
 
     # --- 3. Lọc frame ít thông tin ---
@@ -44,8 +52,7 @@ def redundancy(video_path, keyframe_index, threshold, device="cuda"):
     dup_pairs = (simis > threshold) & tri_mask
 
     # --- 8. Xác định index bị loại ---
-    # Với mỗi j trong cặp (i,j), ta loại j
-    del_mask = torch.any(dup_pairs, dim=0)  # True nếu cột j bị coi là trùng với frame trước
+    del_mask = torch.any(dup_pairs, dim=0)
 
     # --- 9. Lấy final index ---
     keep_mask = ~del_mask
